@@ -1,60 +1,62 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:location/location.dart';
+import 'package:locator/services/location_service.dart';
 
-class MyMapPage extends StatefulWidget {
-  MyMapPage({Key? key}) : super(key: key);
-
+class LocationPage extends StatefulWidget {
+  LocationPage({Key? key}) : super(key: key);
   @override
-  State<MyMapPage> createState() => _MyMapPageState();
+  State<LocationPage> createState() => _LocationPageState();
 }
 
-class _MyMapPageState extends State<MyMapPage> {
-  late GoogleMapController _controller;
-  Location location = Location();
-  LatLng initalLatLang = const LatLng(24.150, -110.32);
-  late Marker marker = _addMarker(const MarkerId('user'));
-
-  void getCurrentLocation() async {
-    location.onLocationChanged.listen((LocationData locationData) {
-      _controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          zoom: 18,
-          target: LatLng(locationData.latitude!, locationData.longitude!))));
-      setState(() {});
-    });
-  }
-
-  void _onMapCreated(GoogleMapController googleMapController) {
-    _controller = googleMapController;
-  }
-
-  _addMarker(MarkerId markerId) {
-    return marker = Marker(
-        markerId: markerId,
-        position: initalLatLang,
-        infoWindow: const InfoWindow(title: 'user'));
-  }
+class _LocationPageState extends State<LocationPage> {
+  GoogleMapController? _controller;
+  final CameraPosition _initialcameraposition =
+      const CameraPosition(target: LatLng(20.5937, 78.9629), zoom: 18);
 
   @override
   void initState() {
-    getCurrentLocation();
     super.initState();
+  }
+
+  void _onMapCreated(GoogleMapController cntrl) {
+    _controller = cntrl;
+  }
+
+  void updateMarker(LocationData locationData) async {}
+
+  void updateCamera(LocationData locationData) async {
+    await _controller?.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(
+            target: LatLng(locationData.latitude!, locationData.longitude!),
+            zoom: 18)));
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        body: Stack(
-      children: [
-        GoogleMap(
-            markers: {marker},
-            myLocationEnabled: true,
-            onMapCreated: ((controller) {
-              _onMapCreated(controller);
-            }),
-            initialCameraPosition:
-                CameraPosition(target: marker.position, zoom: 18)),
-      ],
-    ));
+    return StreamBuilder(
+        stream: LocationService().locationStream,
+        builder: ((context, AsyncSnapshot<LocationData> snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const Scaffold(
+                body: Center(child: CircularProgressIndicator()));
+          } else {
+            updateCamera(snapshot.data!);
+            return Scaffold(
+                body: Stack(
+              children: [
+                GoogleMap(
+                    markers: {
+                      Marker(
+                          markerId: MarkerId('user'),
+                          position: LatLng(snapshot.data!.latitude!,
+                              snapshot.data!.longitude!)),
+                    },
+                    onMapCreated: _onMapCreated,
+                    initialCameraPosition: _initialcameraposition)
+              ],
+            ));
+          }
+        }));
   }
 }

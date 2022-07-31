@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>162628748106-c81r86ttrl29af9bie8lg2kg6p1o0b8c.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.162628748106-c81r86ttrl29af9bie8lg2kg6p1o0b8c</string>
+	<key>API_KEY</key>
+	<string>AIzaSyCj2Ae_frJBjNpEi71E8qzEEWmK5meIGoQ</string>
+	<key>GCM_SENDER_ID</key>
+	<string>162628748106</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.example.locator</string>
+	<key>PROJECT_ID</key>
+	<string>locator-4f6ba</string>
+	<key>STORAGE_BUCKET</key>
+	<string>locator-4f6ba.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:162628748106:ios:060de25cac27cbef3437b3</string>
+	<key>DATABASE_URL</key>
+	<string>https://locator-4f6ba-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

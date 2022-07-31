@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "162628748106",
+    "firebase_url": "https://locator-4f6ba-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "locator-4f6ba",
+    "storage_bucket": "locator-4f6ba.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:162628748106:android:7e89768dd280aadf3437b3",
+        "android_client_info": {
+          "package_name": "com.example.locator"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "162628748106-q5d4tts7pg98p15ltivvibnbfua31sg5.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC574kPsV8hwLj2nZKFJQen7m-4yZTBa3Q"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "162628748106-q5d4tts7pg98p15ltivvibnbfua31sg5.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "162628748106-c81r86ttrl29af9bie8lg2kg6p1o0b8c.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.locator"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

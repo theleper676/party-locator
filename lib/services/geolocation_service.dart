@@ -11,6 +11,9 @@ class GeoLocationService {
 
   GeoLocationService() {
     Geolocator.checkPermission().then((LocationPermission isPermitted) {
+      if (isPermitted == LocationPermission.denied) {
+        Geolocator.requestPermission();
+      }
       Geolocator.getPositionStream(locationSettings: LocationSettings())
           .listen((Position currentPosition) {
         _controller.add(currentPosition);

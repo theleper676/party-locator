@@ -1,11 +1,13 @@
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:location/location.dart';
 import 'package:locator/services/geolocation_service.dart';
+import 'package:locator/services/database_service.dart';
 
 class LocationPage extends StatefulWidget {
   const LocationPage({Key? key}) : super(key: key);
+
   @override
   State<LocationPage> createState() => _LocationPageState();
 }
@@ -14,18 +16,14 @@ class _LocationPageState extends State<LocationPage> {
   GoogleMapController? _controller;
   final CameraPosition _initialcameraposition =
       const CameraPosition(target: LatLng(37.785834, -122.406417), zoom: 18);
-  MarkerId user = const MarkerId('user');
 
-  late Set<Marker> markerList;
+  // Stream of the Current Logged Markers.
+  Stream<DatabaseEvent> dbStream = FirestoreService().usersStreams;
 
+  Set<Marker> markerList = {};
   @override
   void initState() {
-    markerList = {
-      Marker(
-        markerId: user,
-        position: _initialcameraposition.target,
-      )
-    };
+    updateMarker();
     super.initState();
   }
 
@@ -33,7 +31,20 @@ class _LocationPageState extends State<LocationPage> {
     _controller = cntrl;
   }
 
-  void updateMarker(LocationData locationData) async {}
+  void updateMarker() async {
+    await dbStream.forEach((DatabaseEvent element) {
+      element.snapshot.children.map((DataSnapshot e) {
+        markerList = {
+          const Marker(
+              markerId: MarkerId(
+                'ds',
+              ),
+              position: (const LatLng(37.785834, -122.406417)))
+        };
+      });
+      print(markerList);
+    });
+  }
 
   void updateCamera(Position locationData) async {
     await _controller?.animateCamera(CameraUpdate.newCameraPosition(
@@ -53,15 +64,23 @@ class _LocationPageState extends State<LocationPage> {
           } else {
             updateCamera(snapshot.data!);
             return Scaffold(
+                appBar: AppBar(
+                  elevation: 0,
+                  title: const Text('Locate your fiends'),
+                ),
                 body: Stack(
-              children: [
-                GoogleMap(
-                    markers: markerList,
-                    myLocationEnabled: true,
-                    onMapCreated: _onMapCreated,
-                    initialCameraPosition: _initialcameraposition)
-              ],
-            ));
+                  children: <Widget>[
+                    GoogleMap(
+                        markers: {
+                          Marker(
+                              markerId: MarkerId('sdd'),
+                              position: LatLng(37.785834, -122.406417))
+                        },
+                        myLocationEnabled: true,
+                        onMapCreated: _onMapCreated,
+                        initialCameraPosition: _initialcameraposition),
+                  ],
+                ));
           }
         }));
   }
